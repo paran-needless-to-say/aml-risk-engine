@@ -1,0 +1,346 @@
+[
+  {
+    "address": "0xcf0fc0b13a5fb4b46771e9097636968bec288472",
+    "transaction_count": 1,
+    "request_data": {
+      "address": "0xcf0fc0b13a5fb4b46771e9097636968bec288472",
+      "transactions": [
+        {
+          "from_address": "0xf38641709e7fa09c698a545689dc530a886b882f",
+          "to_address": "0xcf0fc0b13a5fb4b46771e9097636968bec288472",
+          "value": 4.35892613880198e+17,
+          "timestamp": 1693066895,
+          "gas": 21000.0,
+          "gasPrice": 20000000000
+        }
+      ],
+      "window_hours": 24
+    },
+    "api_result": {
+      "success": true,
+      "result": {
+        "address": "0xcf0fc0b13a5fb4b46771e9097636968bec288472",
+        "risk_score": 0.0,
+        "risk_level": "VERY_LOW",
+        "weighted_score": 0.0,
+        "applied_rules": [],
+        "feature_contributions": {},
+        "features": {
+          "fanout_degree": 0.0,
+          "fanin_degree": 1.0,
+          "hop_2_neighbors": 0.0,
+          "hop_3_neighbors": 0.0,
+          "clustering_coefficient": 0.0,
+          "betweenness_centrality": 0.0,
+          "pagerank": 0.649122638064138,
+          "eigenvector_centrality": 0.9999990053348863,
+          "tx_frequency_per_hour": 0.041666666666666664,
+          "avg_time_between_txs": 0.0,
+          "time_variance": 0.0,
+          "active_hours_ratio": 0.0,
+          "burst_pattern_score": 0.0,
+          "incoming_amount_variance": 0.0,
+          "incoming_amount_entropy": -0.0,
+          "incoming_round_ratio": 1.0,
+          "outgoing_amount_variance": 0.0,
+          "outgoing_amount_entropy": 0.0,
+          "outgoing_round_ratio": 0.0,
+          "total_amount_variance": 0.0,
+          "amount_pattern_score": 0.0,
+          "gas_price_variance": 0.0,
+          "gas_price_entropy": -0.0,
+          "gas_price_consistency": 1.0,
+          "gas_limit_variance": 0.0,
+          "gas_limit_consistency": 1.0,
+          "gas_usage_efficiency": 1.0,
+          "gas_usage_variance": 0.0,
+          "unique_counterparties": 1.0,
+          "contract_interaction_ratio": 0.0,
+          "eoa_interaction_ratio": 1.0,
+          "address_diversity_score": 1.0
+        }
+      }
+    },
+    "timestamp": "2025-09-07T20:06:07.564811"
+  },
+  {
+    "address": "0x1862514fdc18a1517b4d6c3cb3fa5783d89f04bd",
+    "transaction_count": 1,
+    "request_data": {
+      "address": "0x1862514fdc18a1517b4d6c3cb3fa5783d89f04bd",
+      "transactions": [
+        {
+          "from_address": "0xb96ee7e71b7b92ddbbb44352be28a33aa35e689c",
+          "to_address": "0x1862514fdc18a1517b4d6c3cb3fa5783d89f04bd",
+          "value": 2.4540099320230096e+16,
+          "timestamp": 1693066895,
+          "gas": 21000.0,
+          "gasPrice": 20000000000
+        }
+      ],
+      "window_hours": 24
+    },
+    "api_result": {
+      "success": true,
+      "result": {
+        "address": "0x1862514fdc18a1517b4d6c3cb3fa5783d89f04bd",
+        "risk_score": 0.0,
+        "risk_level": "VERY_LOW",
+        "weighted_score": 0.0,
+        "applied_rules": [],
+        "feature_contributions": {},
+        "features": {
+          "fanout_degree": 0.0,
+          "fanin_degree": 1.0,
+          "hop_2_neighbors": 0.0,
+          "hop_3_neighbors": 0.0,
+          "clustering_coefficient": 0.0,
+          "betweenness_centrality": 0.0,
+          "pagerank": 0.649122638064138,
+          "eigenvector_centrality": 0.9999990053348863,
+          "tx_frequency_per_hour": 0.041666666666666664,
+          "avg_time_between_txs": 0.0,
+          "time_variance": 0.0,
+          "active_hours_ratio": 0.0,
+          "burst_pattern_score": 0.0,
+          "incoming_amount_variance": 0.0,
+          "incoming_amount_entropy": -0.0,
+          "incoming_round_ratio": 1.0,
+          "outgoing_amount_variance": 0.0,
+          "outgoing_amount_entropy": 0.0,
+          "outgoing_round_ratio": 0.0,
+          "total_amount_variance": 0.0,
+          "amount_pattern_score": 0.0,
+          "gas_price_variance": 0.0,
+          "gas_price_entropy": -0.0,
+          "gas_price_consistency": 1.0,
+          "gas_limit_variance": 0.0,
+          "gas_limit_consistency": 1.0,
+          "gas_usage_efficiency": 1.0,
+          "gas_usage_variance": 0.0,
+          "unique_counterparties": 1.0,
+          "contract_interaction_ratio": 0.0,
+          "eoa_interaction_ratio": 1.0,
+          "address_diversity_score": 1.0
+        }
+      }
+    },
+    "timestamp": "2025-09-07T20:06:08.154285"
+  },
+  {
+    "address": "0x4e841622b6b31ccddb31a1c19918174a69e997ad",
+    "transaction_count": 2,
+    "request_data": {
+      "address": "0x4e841622b6b31ccddb31a1c19918174a69e997ad",
+      "transactions": [
+        {
+          "from_address": "0x9e61ccd162172ae8f209549e13660b1d6d9786fc",
+          "to_address": "0x4e841622b6b31ccddb31a1c19918174a69e997ad",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 21000.0,
+          "gasPrice": 20000000000
+        },
+        {
+          "from_address": "0x9e61ccd162172ae8f209549e13660b1d6d9786fc",
+          "to_address": "0x4e841622b6b31ccddb31a1c19918174a69e997ad",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 21000.0,
+          "gasPrice": 20000000000
+        }
+      ],
+      "window_hours": 24
+    },
+    "api_result": {
+      "success": true,
+      "result": {
+        "address": "0x4e841622b6b31ccddb31a1c19918174a69e997ad",
+        "risk_score": 0.0,
+        "risk_level": "VERY_LOW",
+        "weighted_score": 0.0,
+        "applied_rules": [],
+        "feature_contributions": {},
+        "features": {
+          "fanout_degree": 0.0,
+          "fanin_degree": 1.0,
+          "hop_2_neighbors": 0.0,
+          "hop_3_neighbors": 0.0,
+          "clustering_coefficient": 0.0,
+          "betweenness_centrality": 0.0,
+          "pagerank": 0.5,
+          "eigenvector_centrality": 0.9999990053348863,
+          "tx_frequency_per_hour": 0.08333333333333333,
+          "avg_time_between_txs": 0.0,
+          "time_variance": 0.0,
+          "active_hours_ratio": 0.041666666666666664,
+          "burst_pattern_score": 0.0,
+          "incoming_amount_variance": 0.0,
+          "incoming_amount_entropy": -0.0,
+          "incoming_round_ratio": 1.0,
+          "outgoing_amount_variance": 0.0,
+          "outgoing_amount_entropy": 0.0,
+          "outgoing_round_ratio": 0.0,
+          "total_amount_variance": 0.0,
+          "amount_pattern_score": 0.25,
+          "gas_price_variance": 0.0,
+          "gas_price_entropy": -0.0,
+          "gas_price_consistency": 1.0,
+          "gas_limit_variance": 0.0,
+          "gas_limit_consistency": 1.0,
+          "gas_usage_efficiency": 1.0,
+          "gas_usage_variance": 0.0,
+          "unique_counterparties": 1.0,
+          "contract_interaction_ratio": 0.0,
+          "eoa_interaction_ratio": 1.0,
+          "address_diversity_score": 1.0
+        }
+      }
+    },
+    "timestamp": "2025-09-07T20:06:10.357164"
+  },
+  {
+    "address": "0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41",
+    "transaction_count": 2,
+    "request_data": {
+      "address": "0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41",
+      "transactions": [
+        {
+          "from_address": "0x30a20bc595938a53c0f2b7d606c320aea62b3747",
+          "to_address": "0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 700000.0,
+          "gasPrice": 20000000000
+        },
+        {
+          "from_address": "0xb6184813bca9d644dfc7add7dd59a1bca6c93bbe",
+          "to_address": "0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 650000.0,
+          "gasPrice": 20000000000
+        }
+      ],
+      "window_hours": 24
+    },
+    "api_result": {
+      "success": true,
+      "result": {
+        "address": "0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41",
+        "risk_score": 0.0,
+        "risk_level": "VERY_LOW",
+        "weighted_score": 0.0,
+        "applied_rules": [],
+        "feature_contributions": {},
+        "features": {
+          "fanout_degree": 0.0,
+          "fanin_degree": 2.0,
+          "hop_2_neighbors": 0.0,
+          "hop_3_neighbors": 0.0,
+          "clustering_coefficient": 0.0,
+          "betweenness_centrality": 0.0,
+          "pagerank": 0.3333333333333333,
+          "eigenvector_centrality": 0.9999992529790263,
+          "tx_frequency_per_hour": 0.08333333333333333,
+          "avg_time_between_txs": 0.0,
+          "time_variance": 0.0,
+          "active_hours_ratio": 0.041666666666666664,
+          "burst_pattern_score": 0.0,
+          "incoming_amount_variance": 0.0,
+          "incoming_amount_entropy": -0.0,
+          "incoming_round_ratio": 1.0,
+          "outgoing_amount_variance": 0.0,
+          "outgoing_amount_entropy": 0.0,
+          "outgoing_round_ratio": 0.0,
+          "total_amount_variance": 0.0,
+          "amount_pattern_score": 0.25,
+          "gas_price_variance": 0.0,
+          "gas_price_entropy": -0.0,
+          "gas_price_consistency": 1.0,
+          "gas_limit_variance": 625000000.0,
+          "gas_limit_consistency": 3.999840006399744e-05,
+          "gas_usage_efficiency": 1.0,
+          "gas_usage_variance": 0.0,
+          "unique_counterparties": 2.0,
+          "contract_interaction_ratio": 0.0,
+          "eoa_interaction_ratio": 1.0,
+          "address_diversity_score": 1.0
+        }
+      }
+    },
+    "timestamp": "2025-09-07T20:06:13.049823"
+  },
+  {
+    "address": "0x16d5783a96ab20c9157d7933ac236646b29589a4",
+    "transaction_count": 2,
+    "request_data": {
+      "address": "0x16d5783a96ab20c9157d7933ac236646b29589a4",
+      "transactions": [
+        {
+          "from_address": "0x16d5783a96ab20c9157d7933ac236646b29589a4",
+          "to_address": "0xfd14567eaf9ba941cb8c8a94eec14831ca7fd1b4",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 11000000.0,
+          "gasPrice": 20000000000
+        },
+        {
+          "from_address": "0x16d5783a96ab20c9157d7933ac236646b29589a4",
+          "to_address": "0xfd14567eaf9ba941cb8c8a94eec14831ca7fd1b4",
+          "value": 0.0,
+          "timestamp": 1693066895,
+          "gas": 11000000.0,
+          "gasPrice": 20000000000
+        }
+      ],
+      "window_hours": 24
+    },
+    "api_result": {
+      "success": true,
+      "result": {
+        "address": "0x16d5783a96ab20c9157d7933ac236646b29589a4",
+        "risk_score": 0.0,
+        "risk_level": "VERY_LOW",
+        "weighted_score": 0.0,
+        "applied_rules": [],
+        "feature_contributions": {},
+        "features": {
+          "fanout_degree": 1.0,
+          "fanin_degree": 0.0,
+          "hop_2_neighbors": 0.0,
+          "hop_3_neighbors": 0.0,
+          "clustering_coefficient": 0.0,
+          "betweenness_centrality": 0.0,
+          "pagerank": 0.5,
+          "eigenvector_centrality": 0.001410435832630306,
+          "tx_frequency_per_hour": 0.08333333333333333,
+          "avg_time_between_txs": 0.0,
+          "time_variance": 0.0,
+          "active_hours_ratio": 0.041666666666666664,
+          "burst_pattern_score": 0.0,
+          "incoming_amount_variance": 0.0,
+          "incoming_amount_entropy": 0.0,
+          "incoming_round_ratio": 0.0,
+          "outgoing_amount_variance": 0.0,
+          "outgoing_amount_entropy": -0.0,
+          "outgoing_round_ratio": 1.0,
+          "total_amount_variance": 0.0,
+          "amount_pattern_score": 0.25,
+          "gas_price_variance": 0.0,
+          "gas_price_entropy": -0.0,
+          "gas_price_consistency": 1.0,
+          "gas_limit_variance": 0.0,
+          "gas_limit_consistency": 1.0,
+          "gas_usage_efficiency": 1.0,
+          "gas_usage_variance": 0.0,
+          "unique_counterparties": 1.0,
+          "contract_interaction_ratio": 0.0,
+          "eoa_interaction_ratio": 1.0,
+          "address_diversity_score": 1.0
+        }
+      }
+    },
+    "timestamp": "2025-09-07T20:06:13.657741"
+  }
+]

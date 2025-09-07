@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AML Risk Policy Schema",
+  "description": "AML 리스크 평가 정책 파일의 검증 스키마",
+  "type": "object",
+  "required": ["name", "version", "feature_weights", "thresholds", "rules", "anomaly_weights"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "정책 이름"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "정책 버전 (시맨틱 버저닝)"
+    },
+    "description": {
+      "type": "string",
+      "description": "정책 설명"
+    },
+    "feature_weights": {
+      "type": "object",
+      "description": "피처별 가중치",
+      "properties": {
+        "centrality_unique_addresses": {"type": "number", "minimum": 0, "maximum": 1},
+        "centrality_tx_frequency": {"type": "number", "minimum": 0, "maximum": 1},
+        "centrality_incoming_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "centrality_outgoing_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "exposure_total_value": {"type": "number", "minimum": 0, "maximum": 1},
+        "exposure_avg_tx_value": {"type": "number", "minimum": 0, "maximum": 1},
+        "exposure_max_tx_value": {"type": "number", "minimum": 0, "maximum": 1},
+        "behavior_interval_std": {"type": "number", "minimum": 0, "maximum": 1},
+        "behavior_gas_price_std": {"type": "number", "minimum": 0, "maximum": 1},
+        "behavior_repeat_tx_ratio": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "thresholds": {
+      "type": "object",
+      "required": ["low_risk", "medium_risk", "high_risk"],
+      "properties": {
+        "low_risk": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "낮은 리스크 임계값"
+        },
+        "medium_risk": {
+          "type": "number", 
+          "minimum": 0,
+          "maximum": 1,
+          "description": "중간 리스크 임계값"
+        },
+        "high_risk": {
+          "type": "number",
+          "minimum": 0, 
+          "maximum": 1,
+          "description": "높은 리스크 임계값"
+        }
+      },
+      "additionalProperties": false
+    },
+    "rules": {
+      "type": "array",
+      "description": "룰 기반 평가 규칙들",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "condition", "risk_multiplier"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "룰 이름"
+          },
+          "description": {
+            "type": "string", 
+            "description": "룰 설명"
+          },
+          "condition": {
+            "type": "string",
+            "description": "룰 조건 (표현식)"
+          },
+          "risk_multiplier": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 10.0,
+            "description": "리스크 배수"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "룰 활성화 여부"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "anomaly_weights": {
+      "type": "object",
+      "description": "이상행동 탐지 모델별 가중치",
+      "properties": {
+        "isolation_forest": {"type": "number", "minimum": 0, "maximum": 1},
+        "local_outlier_factor": {"type": "number", "minimum": 0, "maximum": 1},
+        "xgboost": {"type": "number", "minimum": 0, "maximum": 1},
+        "lightgbm": {"type": "number", "minimum": 0, "maximum": 1}
+      },
+      "additionalProperties": false
+    },
+    "normalization": {
+      "type": "object",
+      "description": "피처 정규화 파라미터",
+      "patternProperties": {
+        "^[a-z_]+$": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": ["linear", "log_scale", "sigmoid"],
+              "description": "정규화 방법"
+            },
+            "max_value": {
+              "type": "number",
+              "minimum": 0,
+              "description": "최대값"
+            },
+            "min_value": {
+              "type": "number",
+              "minimum": 0,
+              "description": "최소값"
+            }
+          },
+          "required": ["method"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "메타데이터",
+      "properties": {
+        "created_by": {"type": "string"},
+        "created_date": {"type": "string", "format": "date"},
+        "last_updated": {"type": "string", "format": "date"},
+        "target_blockchain": {"type": "string"},
+        "compliance_framework": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

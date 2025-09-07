@@ -1,0 +1,196 @@
+version: v1.0
+name: rulebook_light_mvp
+description: >
+  Lightweight C/E/B rulebook for student demo (on-chain friendly).
+  Off-chain/paid-data-heavy rules are commented out for now.
+  You can re-enable them later by removing the leading '# '.
+
+  Compliance/Behavior = "규칙 위반 → 점수 더하기"
+  Exposure = "위험 확률 → 스코어링 가중치"
+  Compliance / Behavior 축 → score (정수)
+
+thresholds:
+  risk_score:
+    warn: 60
+    alert: 80
+
+aggregate:
+  method: weighted_sum
+  normalize: true
+
+axes:
+  compliance:
+    C-001:
+      name: "제재 대상 직접 접촉"
+      # Requires official crypto-asset sanction address list (OFAC SDN has some on-chain addresses)
+      condition: "sanctions.contains(counterparty) and usd_amount >= 1"
+      score: 80
+      description: "OFAC/UN/EU 제재 명단 위반"
+      guard: "cooldown=1m"
+    # C-002:
+    #   name: "제재 브리지/라우터"
+    #   # Needs path detection + sanction list; keep for later
+    #   condition: "bridge.used and sanctions.contains(path) and usd_amount >= 20"
+    #   score: 45
+    #   description: "규제 회피 시도"
+    #   guard: "usd_min=20"
+    # C-010:
+    #   name: "Travel Rule 미준수"
+    #   # Off-chain TR metadata from VASP required
+    #   condition: "vasp.tx and usd_amount >= 700 and travel_rule.missing"
+    #   score: 25
+    #   description: "한국 규제 의무 위반"
+    # C-011:
+    #   name: "CTR/STR 보고 의무 회피"
+    #   # Needs daily aggregation + USD price feed; enable later if price oracle ready
+    #   condition: "usd_amount >= 10000 and daily_tx_count >= 3"
+    #   score: 20
+    #   description: "보고 의무 회피 시도"
+    # C-020:
+    #   name: "KYC 의무 위반"
+    #   # Off-chain KYC level from VASP
+    #   condition: "vasp and (kyc_level == 'none' or kyc_level == 'low') and usd_amount >= 50"
+    #   score: 20
+    # C-021:
+    #   name: "고위험국 VASP"
+    #   # Off-chain VASP country list needed
+    #   condition: "vasp.country in ['IR','RU','KP'] and usd_amount >= 100"
+    #   score: 25
+    # C-090:
+    #   name: "CEX 내부 이동"
+    #   # Needs curated internal wallet tags (off-chain)
+    #   condition: "vasp and internal_wallet"
+    #   score: 0
+    # C-091:
+    #   name: "MM/Arb 봇 패턴"
+    #   condition: "mm_bot and tx_count(10m) >= 3"
+    #   score: 0
+
+  exposure:
+    E-101:
+      name: "믹서 직접 사용"
+      # Needs curated mixer contract list (manageable on-chain allowlist/denylist)
+      condition: "mixer.used and usd_amount >= 20"
+      weight: 0.8
+      description: "자금 추적 어려움"
+      guard: "exclude_if=reward_distributor"
+    # E-102:
+    #   name: "SDN 2홉 이내"
+    #   # Requires sanctions list + 2-hop trace capability
+    #   condition: "distance_to_sdn <= 2 and usd_amount >= 20"
+    #   weight: 0.9
+    # E-103:
+    #   name: "상대방 품질"
+    #   # Off-chain VASP quality score
+    #   condition: "vasp.quality_score"
+    #   weight: 0.7
+    # E-201:
+    #   name: "랜섬웨어/DNM"
+    #   # Off-chain threat intel labels
+    #   condition: "label in ['ransomware','dnm'] and usd_amount >= 10"
+    #   weight: 0.9
+    # E-202:
+    #   name: "프라이버시 코인"
+    #   # Mostly non-EVM; skip in ETH-focused MVP
+    #   condition: "token in ['XMR','ZEC','DASH'] and usd_amount >= 50"
+    #   weight: 0.75
+    # E-203:
+    #   name: "스테이블코인 동결"
+    #   # Needs issuer blacklist events (possible later via on-chain logs)
+    #   condition: "token.frozen_within(1y) and usd_amount >= 50"
+    #   weight: 0.6
+
+  behavior:
+    tempo:
+      B-101:
+        name: "버스트 거래 (10분)"
+        condition: "tx_count(10m) >= 3"
+        score: 15
+        description: "비정상적 빈도"
+        guard: "cooldown=30m"
+      B-102:
+        name: "급속 연속 (1분)"
+        condition: "tx_count(1m) >= 5"
+        score: 20
+        description: "매우 의심스러운 패턴"
+        guard: "cooldown=15m"
+      B-103:
+        name: "비정상 타이밍"
+        condition: "stddev(tx_interval) >= 2.0 and usd_amount >= 50"
+        score: 10
+        description: "비정상적 타이밍"
+
+    topology:
+      B-201:
+        name: "동일 토큰 체인"
+        condition: "hops >= 3 and amount_change <= 0.05 and usd_amount >= 100"
+        score: 25
+        description: "레이어링 의심"
+      # B-202:
+      #   name: "순환 거래 경로"
+      #   # Needs cycle detection on graph; enable later
+      #   condition: "graph.has_cycle and usd_amount >= 100"
+      #   score: 30
+      B-203:
+        name: "팬아웃 패턴"
+        condition: "fanout >= 5 within=10m and usd_amount >= 1000"
+        score: 20
+        description: "분산 전송 의심"
+      B-204:
+        name: "허브-스포크"
+        condition: "in_out_degree >= 3 within=1h and usd_amount >= 500"
+        score: 15
+        description: "중개자 의심"
+
+    event:
+      B-301:
+        name: "승인-유출 시퀀스"
+        # Needs ERC20 Approval + Transfer logs (on-chain, feasible)
+        condition: "approval then outflow within=24h"
+        score: 30
+        description: "의심스러운 시퀀스"
+      # B-302:
+      #   name: "플래시론 패턴"
+      #   # Requires curated flashloan pools/events; enable later
+      #   condition: "flashloan and usd_amount >= 10000 within=1h"
+      #   score: 25
+      # B-303:
+      #   name: "MEV 샌드위치"
+      #   # Needs mempool/MEV analysis; enable later
+      #   condition: "mev_attack within=3 blocks"
+      #   score: 35
+
+    lifecycle:
+      B-401:
+        name: "신규 주소 고액"
+        condition: "address_age <= 7d and usd_amount >= 10000"
+        score: 20
+        description: "신규 주소 고액 이동"
+      B-402:
+        name: "휴면 주소 활성화"
+        condition: "dormant >= 180d and usd_amount >= 1000"
+        score: 15
+        description: "갑작스러운 활성화"
+      B-403:
+        name: "생명주기 이상"
+        condition: "lifecycle_mismatch"
+        score: 10
+        description: "나이-활동 불일치"
+
+    value:
+      B-501:
+        name: "고액 거래"
+        condition: "usd_amount >= 10000"
+        score: 15
+        description: "고액 경고"
+      B-502:
+        name: "마이크로 스팸"
+        condition: "usd_amount <= 1 and tx_count(1h) >= 50"
+        score: 15
+        description: "스팸 의심"
+        guard: "cooldown=30m"
+      B-503:
+        name: "금액 반올림 반복"
+        condition: "amount_endswith_000 and repeated >= 3 and usd_amount >= 1000"
+        score: 10
+        description: "구조화 거래 의심"
