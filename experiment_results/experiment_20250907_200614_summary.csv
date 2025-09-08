@@ -1,6 +1,0 @@
-address,transaction_count,risk_score,risk_level,applied_rules_count,features_count,success
-0xcf0fc0b13a5fb4b46771e9097636968bec288472,1,0.0,VERY_LOW,0,32,True
-0x1862514fdc18a1517b4d6c3cb3fa5783d89f04bd,1,0.0,VERY_LOW,0,32,True
-0x4e841622b6b31ccddb31a1c19918174a69e997ad,2,0.0,VERY_LOW,0,32,True
-0x3999d2c5207c06bbc5cf8a6bea52966cabb76d41,2,0.0,VERY_LOW,0,32,True
-0x16d5783a96ab20c9157d7933ac236646b29589a4,2,0.0,VERY_LOW,0,32,True
