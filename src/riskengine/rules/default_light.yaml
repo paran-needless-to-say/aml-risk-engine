@@ -8,11 +8,14 @@ description: >
   Compliance/Behavior = "규칙 위반 → 점수 더하기"
   Exposure = "위험 확률 → 스코어링 가중치"
   Compliance / Behavior 축 → score (정수)
+  Exposure 축 → weight (0~1)
 
 thresholds:
   risk_score:
-    warn: 60
-    alert: 80
+    low: 30 # 낮음 (30점 미만)
+    medium: 50 # 중간 (30점 이상 ~ 50점 미만)
+    high: 70 # 높음 (50점 이상 ~ 70점 미만)
+    critical: 90 # 매우 높음 (70점 이상)
 
 aggregate:
   method: weighted_sum

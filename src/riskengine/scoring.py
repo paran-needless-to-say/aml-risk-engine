@@ -391,14 +391,25 @@ class RiskScorer:
         return min(1.0, max(0.0, final_score))
     
     def _determine_risk_level(self, score: float) -> str:
-        """리스크 레벨을 결정합니다."""
-        thresholds = self.thresholds
+        """리스크 레벨을 결정합니다 (4단계)."""
+        # score를 0-100 범위로 변환 (기존 0-1 범위에서)
+        score_100 = score * 100
         
-        if score >= thresholds.get('high_risk', 0.8):
+        # YAML에서 risk_score 임계값 가져오기
+        risk_thresholds = self.thresholds.get('risk_score', {})
+        
+        critical_threshold = risk_thresholds.get('critical', 90)
+        high_threshold = risk_thresholds.get('high', 70)
+        medium_threshold = risk_thresholds.get('medium', 50)
+        low_threshold = risk_thresholds.get('low', 30)
+        
+        if score_100 >= critical_threshold:
+            return 'CRITICAL'
+        elif score_100 >= high_threshold:
             return 'HIGH'
-        elif score >= thresholds.get('medium_risk', 0.6):
+        elif score_100 >= medium_threshold:
             return 'MEDIUM'
-        elif score >= thresholds.get('low_risk', 0.3):
+        elif score_100 >= low_threshold:
             return 'LOW'
         else:
             return 'VERY_LOW'

@@ -37,25 +37,38 @@
     },
     "thresholds": {
       "type": "object",
-      "required": ["low_risk", "medium_risk", "high_risk"],
+      "required": ["risk_score"],
       "properties": {
-        "low_risk": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1,
-          "description": "낮은 리스크 임계값"
-        },
-        "medium_risk": {
-          "type": "number", 
-          "minimum": 0,
-          "maximum": 1,
-          "description": "중간 리스크 임계값"
-        },
-        "high_risk": {
-          "type": "number",
-          "minimum": 0, 
-          "maximum": 1,
-          "description": "높은 리스크 임계값"
+        "risk_score": {
+          "type": "object",
+          "required": ["low", "medium", "high", "critical"],
+          "properties": {
+            "low": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "낮은 리스크 임계값"
+            },
+            "medium": {
+              "type": "number", 
+              "minimum": 0,
+              "maximum": 100,
+              "description": "중간 리스크 임계값"
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0, 
+              "maximum": 100,
+              "description": "높은 리스크 임계값"
+            },
+            "critical": {
+              "type": "number",
+              "minimum": 0, 
+              "maximum": 100,
+              "description": "매우 높은 리스크 임계값"
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
