@@ -266,9 +266,34 @@ class RiskScorer:
             if axis_name == 'compliance':
                 C_score += axis_score
             elif axis_name == 'exposure':
-                E_weight *= axis_weight  # 가중치는 곱셈으로 집계
+                # E축: soft scaling으로 극단적 감점 방지
+                # 기존: 0.9 × 0.8 × 0.7 = 0.504 (극단적 감점)
+                # 개선: exp(log(0.9) + log(0.8) + log(0.7)) = 더 부드러운 감점
+                if axis_weight < 1.0:  # 위험 가중치인 경우만 적용
+                    import math
+                    log_weight = math.log(axis_weight) if axis_weight > 0 else -10
+                    if not hasattr(self, '_exposure_log_sum'):
+                        self._exposure_log_sum = 0
+                    self._exposure_log_sum += log_weight
+                else:
+                    E_weight *= axis_weight
             elif axis_name == 'behavior':
-                B_score += axis_score
+                # B축: log scaling으로 동일 패턴 반복시 과잉 알람 방지
+                # 기존: 15 + 15 + 15 = 45점 (선형 증가)
+                # 개선: log(1 + 15) + log(1 + 15) + log(1 + 15) = 더 부드러운 증가
+                if axis_score > 0:
+                    import math
+                    log_scaled_score = math.log(1 + axis_score) * 10  # 10배 스케일링으로 적절한 범위 유지
+                    B_score += log_scaled_score
+                else:
+                    B_score += axis_score
+        
+        # E축 soft scaling 최종 계산
+        if hasattr(self, '_exposure_log_sum') and self._exposure_log_sum != 0:
+            import math
+            E_weight = math.exp(self._exposure_log_sum)
+            # 계산 후 초기화
+            delattr(self, '_exposure_log_sum')
         
         return {
             'C_score': C_score,
@@ -713,14 +738,18 @@ class RiskScorer:
         rule_score = (base_score + C_score + B_score) * E_weight
         
         # === 3. AI 이상행동 탐지 점수 ===
-        anomaly_score = anomaly_scores.get('combined_score', 0.0)
+        raw_anomaly_score = anomaly_scores.get('combined_score', 0.0)
         
-        # === 4. 최종 집계: 룰 기반 70% + AI 기반 30% ===
-        final_score = (rule_score * 0.7) + (anomaly_score * 0.3)
+        # === 4. 스케일 정규화: 둘 다 0-100 범위로 맞춤 ===
+        # 룰 점수는 이미 0-100+ 범위, anomaly는 0-1 범위이므로 100배 스케일링
+        normalized_rule_score = min(100.0, max(0.0, rule_score))
+        normalized_anomaly_score = min(100.0, max(0.0, raw_anomaly_score * 100))
         
-        # === 5. 점수를 0-1 범위로 정규화 ===
-        # C/E/B 축에서는 점수가 100점을 넘을 수 있으므로 정규화 필요
-        normalized_score = min(1.0, max(0.0, final_score / 100.0))
+        # === 5. 최종 집계: 동일한 스케일에서 하이브리드 결합 ===
+        final_score_100 = (normalized_rule_score * 0.7) + (normalized_anomaly_score * 0.3)
+        
+        # === 6. 0-1 범위로 최종 정규화 ===
+        normalized_score = final_score_100 / 100.0
         
         return normalized_score
 
